@@ -3,7 +3,7 @@ A textual-based TUI for the Ansible debugger.
 
 This is an exploration of using automation and [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to help teach operational management and support.
 
-Ansible is selected for "simplicity", widespread use, community support and it's FOSS licensing. This is not to say that ansible is a "simple tool". To the contrary, event the simpliest tasks and network configuration quickly becomes obscure due to the inherent complexity and scale of the operations ansible is performing. This makes [IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code) difficult for new users, with a daunting learning curve and dire consequenses should any mistakes be made.
+Ansible is selected for "simplicity", widespread use, community support and it's FOSS licensing. This is not to say that ansible is a "simple tool". To the contrary, event the simplest tasks and network configuration quickly becomes obscure due to the inherent complexity and scale of the operations ansible is performing. This makes [IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code) difficult for new users, with a daunting learning curve and dire consequenses should any mistakes be made.
 
 At the same time, IaC is a powerful tool that both describes an entire system and provides a means create and maintain it. Framed as a functional description of a system and its operation, IaC becomes an opportunity to use the captured knowledge to demonstrate "how systems are built".
 
@@ -23,7 +23,7 @@ playbook debugger commands:
 * continue
 * quit
 
-Based on a textual TCSS file, the user will be able to modify the display and layout of the TUI. Further the TUI is designed to be reactive and to downgrade gracefully for older terminals. `tansible` is intended to operate over ssh, take advantage of modern terminal capabilities and still work well when all you have an actual console connection.
+Based on a textual TCSS file, the user will be able to modify the display and layout of the TUI. The TUI is designed to be reactive and to downgrade gracefully for older terminals. `tansible` is intended to operate over ssh, take advantage of modern terminal capabilities and still work well when all you have an actual console connection.
 
 ## Alternatives
 
