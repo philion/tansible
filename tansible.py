@@ -114,10 +114,10 @@ class InventoryTree(DirectoryTree):
             #self.sub_title = str(event.path)
 
 
-class Browser(App):
+class Tansible(App):
     """Ansible browser app."""
 
-    CSS_PATH = "browser.tcss"
+    CSS_PATH = "tansible.tcss"
     BINDINGS = [
         ("f", "toggle_files", "Toggle Files"),
         ("q", "quit", "Quit"),
@@ -229,4 +229,4 @@ class Browser(App):
 
 
 if __name__ == "__main__":
-    Browser().run()
+    Tansible().run()
