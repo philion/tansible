@@ -22,17 +22,20 @@ class AnsibleWidget(RichLog):
     #        super().__init__()
 
     def execute_playbook_cmd(self, inv_file: Path, playbook: Path) -> None:
-        # ansible-playbook -i example-playbook/hosts example-playbook/site.yml --list-hosts
-        cmd = ["ansible-playbook", "-i", inv_file, playbook, "--list-hosts"]
+        try:
+            # ansible-playbook -i example-playbook/hosts example-playbook/site.yml --list-hosts
+            cmd = ["ansible-playbook", "-i", inv_file, playbook] #, "--list-hosts"]
 
-        #p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=PIPE, text=True)
-        #p.wait()
-        #stdout_data = p.communicate(input='data_to_write')[0]
+            #p = Popen(cmd, stdout=PIPE, stdin=PIPE, stderr=PIPE, text=True)
+            #p.wait()
+            #stdout_data = p.communicate(input='data_to_write')[0]
 
-        out = check_output(cmd).decode("utf-8")
-        self.write(out)
-        #log.debug(f"wrote {out.__class__}")
-
+            out = check_output(cmd).decode("utf-8")
+            #self.write(out)
+            log.info(f"out: {out}")
+        except Exception as ex:
+            log.error(f"error executing playbook: {ex}", stack_info=True)
+                
 
     def execute_playbook(self, inventory: Path, playbook: Path) -> None:
         inventory_filename = inventory.absolute().as_posix()
@@ -72,4 +75,4 @@ class AnsibleWidget(RichLog):
 if __name__ == "__main__":
     inventory = Path("./example-playbook/hosts")
     playbook = Path("./example-playbook/site.yml")
-    AnsibleWidget().execute_playbook(inventory, playbook)
+    AnsibleWidget().execute_playbook_cmd(inventory, playbook)
