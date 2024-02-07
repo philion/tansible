@@ -5,6 +5,8 @@ import sys
 import logging
 from pathlib import Path
 from typing import Iterable
+from subprocess import Popen, PIPE, STDOUT
+
 from rich.syntax import Syntax
 from rich.traceback import Traceback
 
@@ -14,13 +16,8 @@ from textual.reactive import var
 from textual.widgets import DirectoryTree, Footer, Header, Static, RichLog
 from textual.message import Message
 
-from ansible import context
-from ansible.cli import CLI
-from ansible.module_utils.common.collections import ImmutableDict
-from ansible.executor.playbook_executor import PlaybookExecutor
-from ansible.parsing.dataloader import DataLoader
-from ansible.inventory.manager import InventoryManager
-from ansible.vars.manager import VariableManager
+
+from AnsibleWidget import AnsibleWidget
 
 log = logging.getLogger(__name__)
 
@@ -79,40 +76,6 @@ class InventoryTree(DirectoryTree):
 # def InventoryWidget, composed of InventoryTree and inventory list.
 # add events for items selected in inventory list, to limit operation to those selected.
 # inventory updates for InventoryTree.Selected and Inventory.Selected (multiselect?)
-
-class AnsibleWidget(RichLog):
-    #def __init__(self, path: Path) -> None:
-    #        self.path = path
-    #        super().__init__()
-    
-    def execute_playbook(self, inv_file: Path, playbook: Path) -> None:
-        # redirect stdout to widget
-        
-        context.CLIARGS = ImmutableDict(
-            tags={}, listtags=False, listtasks=False, listhosts=False, syntax=False, connection='ssh', 
-            module_path=None, forks=100, remote_user='ansible', private_key_file=None, ssh_common_args=None, 
-            ssh_extra_args=None, sftp_extra_args=None, scp_extra_args=None, become=True, become_method='sudo', 
-            become_user='root', verbosity=True, check=False, start_at_task=None)
-
-        loader = DataLoader()
-        
-        inventory = InventoryManager(loader=loader, sources=inv_file.absolute().as_posix())
-        
-        variable_manager = VariableManager(
-            loader=loader, 
-            inventory=inventory, 
-            version_info=CLI.version_info(gitinfo=False)
-        )
-
-        pbex = PlaybookExecutor(
-            playbooks=[playbook.absolute().as_posix()], 
-            inventory=inventory, 
-            variable_manager=variable_manager, 
-            loader=loader, 
-            passwords={} # passwords = dict(vault_pass='secret'), load from .env?
-        )
-
-        results = pbex.run() # list of plays
 
 
 class Tansible(App):
@@ -235,10 +198,12 @@ class Tansible(App):
     def action_execute(self) -> None:
         """Called in response to execute key binding, to run a playbook"""
         if self.playbook.is_file() and self.inventory.is_file():
-            ansible_widget = self.query_one("#ansible", AnsibleWidget)
-            log.info(f"executing {self.playbook} with inventory {self.inventory}")
-            ansible_widget.execute_playbook(self.inventory, self.playbook)
-
+            try:
+                ansible_widget = self.query_one("#ansible", AnsibleWidget)
+                ansible_widget.execute_playbook(self.inventory, self.playbook)
+            except Exception as ex:
+                log.error(f"error executing playbook: {ex}", stack_info=True)
+                
 
 if __name__ == "__main__":
     Tansible().run()
