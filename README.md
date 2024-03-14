@@ -3,7 +3,7 @@ A textual-based TUI for the Ansible debugger.
 
 Test: 
 * https://github.com/philion/tansible/wiki
-* [[wiki]]
+* [wiki]
 
 This is an exploration of using automation and [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to help teach operational management and support.
 
