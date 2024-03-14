@@ -1,12 +1,7 @@
 # tansible
 A textual-based TUI for the Ansible debugger.
 
-Test: 
-* https://github.com/philion/tansible/wiki
-* wiki/
-* [wiki link](wiki/)
-* [another](./wiki/)
-* [and yet](wiki)
+On a [fully-qualified link](https://github.com/philion/tansible/wiki) will create a link to the wiki.
 
 This is an exploration of using automation and [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to help teach operational management and support.
 
