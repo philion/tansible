@@ -1,6 +1,10 @@
 # tansible
 A textual-based TUI for the Ansible debugger.
 
+Test: 
+* https://github.com/philion/tansible/wiki
+* [[wiki]]
+
 This is an exploration of using automation and [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to help teach operational management and support.
 
 Ansible is selected for "simplicity", widespread use, community support and it's FOSS licensing. This is not to say that ansible is a "simple tool". To the contrary, event the simplest tasks and network configuration quickly becomes obscure due to the inherent complexity and scale of the operations ansible is performing. This makes [IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code) difficult for new users, with a daunting learning curve and dire consequenses should any mistakes be made.
